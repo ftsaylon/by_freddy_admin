@@ -25,14 +25,14 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   final _form = GlobalKey<FormState>();
   final _countryFocusNode = FocusNode();
   final _companyFocusNode = FocusNode();
-  final _clientFocusNode = FocusNode();
+  final _clientIdFocusNode = FocusNode();
   final _notesFocusNode = FocusNode();
 
   var _editedQuote = Quote(
     id: null,
     country: '',
     company: '',
-    client: '',
+    clientId: '',
     dateOfIssue: null,
     dueDate: null,
     budget: '',
@@ -49,7 +49,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
     'id': '',
     'country': '',
     'company': '',
-    'client': '',
+    'clientId': '',
     'dateOfIssue': null,
     'dueDate': null,
     'budget': '',
@@ -66,7 +66,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
   void dispose() {
     _countryFocusNode.dispose();
     _companyFocusNode.dispose();
-    _clientFocusNode.dispose();
+    _clientIdFocusNode.dispose();
     _notesFocusNode.dispose();
     super.dispose();
   }
@@ -171,7 +171,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                         id: _editedQuote.id,
                         country: value,
                         company: _editedQuote.company,
-                        client: _editedQuote.client,
+                        clientId: _editedQuote.clientId,
                         dateOfIssue: _editedQuote.dateOfIssue,
                         dueDate: _editedQuote.dueDate,
                         budget: _editedQuote.budget,
@@ -203,7 +203,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                     focusNode: _companyFocusNode,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(
-                        _clientFocusNode,
+                        _clientIdFocusNode,
                       );
                     },
                     validator: (value) {
@@ -217,7 +217,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                         id: _editedQuote.id,
                         country: _editedQuote.country,
                         company: value,
-                        client: _editedQuote.client,
+                        clientId: _editedQuote.clientId,
                         dateOfIssue: _editedQuote.dateOfIssue,
                         dueDate: _editedQuote.dueDate,
                         budget: _editedQuote.budget,
@@ -240,13 +240,13 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    initialValue: _initValues['client'],
+                    initialValue: _initValues['clientId'],
                     decoration: InputDecoration(
                       labelText: 'Client Name',
                       border: OutlineInputBorder(),
                     ),
                     textInputAction: TextInputAction.next,
-                    focusNode: _clientFocusNode,
+                    focusNode: _clientIdFocusNode,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(
                         _notesFocusNode,
@@ -263,7 +263,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                         id: _editedQuote.id,
                         country: _editedQuote.country,
                         company: _editedQuote.company,
-                        client: value,
+                        clientId: value,
                         dateOfIssue: _editedQuote.dateOfIssue,
                         dueDate: _editedQuote.dueDate,
                         budget: _editedQuote.budget,
@@ -295,7 +295,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                           id: _editedQuote.id,
                           country: _editedQuote.country,
                           company: _editedQuote.company,
-                          client: _editedQuote.client,
+                          clientId: _editedQuote.clientId,
                           dateOfIssue: date,
                           dueDate: _editedQuote.dueDate,
                           budget: _editedQuote.budget,
@@ -321,7 +321,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                           id: _editedQuote.id,
                           country: _editedQuote.country,
                           company: _editedQuote.company,
-                          client: _editedQuote.client,
+                          clientId: _editedQuote.clientId,
                           dateOfIssue: _editedQuote.dateOfIssue,
                           dueDate: date,
                           budget: _editedQuote.budget,
@@ -361,7 +361,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                                         id: _editedQuote.id,
                                         country: _editedQuote.country,
                                         company: _editedQuote.company,
-                                        client: _editedQuote.client,
+                                        clientId: _editedQuote.clientId,
                                         dateOfIssue: _editedQuote.dateOfIssue,
                                         dueDate: _editedQuote.dueDate,
                                         budget: 'A',
@@ -390,7 +390,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                                         id: _editedQuote.id,
                                         country: _editedQuote.country,
                                         company: _editedQuote.company,
-                                        client: _editedQuote.client,
+                                        clientId: _editedQuote.clientId,
                                         dateOfIssue: _editedQuote.dateOfIssue,
                                         dueDate: _editedQuote.dueDate,
                                         budget: 'B',
@@ -419,7 +419,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                                         id: _editedQuote.id,
                                         country: _editedQuote.country,
                                         company: _editedQuote.company,
-                                        client: _editedQuote.client,
+                                        clientId: _editedQuote.clientId,
                                         dateOfIssue: _editedQuote.dateOfIssue,
                                         dueDate: _editedQuote.dueDate,
                                         budget: 'C',
@@ -480,7 +480,7 @@ class _EditQuoteScreenState extends State<EditQuoteScreen> {
                               id: _editedQuote.id,
                               country: _editedQuote.country,
                               company: _editedQuote.company,
-                              client: _editedQuote.client,
+                              clientId: _editedQuote.clientId,
                               dateOfIssue: _editedQuote.dateOfIssue,
                               dueDate: _editedQuote.dueDate,
                               budget: _editedQuote.budget,

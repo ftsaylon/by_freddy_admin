@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 /* -------------------------------------------------------------------------- */
 
 /* --------------------------------- Screens -------------------------------- */
-import '../screens/auth_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/clients_screen.dart';
 import '../screens/tradesmen_screen.dart';
 import '../screens/prospects_screen.dart';
 import '../screens/invoices_menu_screen.dart';
+import '../screens/activities_screen.dart';
 /* -------------------------------------------------------------------------- */
 
 class AppDrawer extends StatelessWidget {
@@ -92,7 +92,11 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.flash_on),
               title: Text('Activities'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed(
+                  ActivitiesScreen.routeName,
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.assignment),

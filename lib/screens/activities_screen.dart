@@ -1,29 +1,22 @@
 /* -------------------------------- Packages -------------------------------- */
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-/* -------------------------------------------------------------------------- */
-
-/* -------------------------------- Providers ------------------------------- */
-import '../providers/clients.dart';
 /* -------------------------------------------------------------------------- */
 
 /* --------------------------------- Widgets -------------------------------- */
 import '../widgets/app_drawer.dart';
 /* -------------------------------------------------------------------------- */
 
-class ClientsScreen extends StatelessWidget {
-  const ClientsScreen({Key key}) : super(key: key);
+class ActivitiesScreen extends StatelessWidget {
+  const ActivitiesScreen({Key key}) : super(key: key);
 
-  static const routeName = '/clients';
+  static const routeName = '/activities';
 
   @override
   Widget build(BuildContext context) {
-    final clients = Provider.of<Clients>(context).clients;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Clients',
+          'Activities',
           style: TextStyle(
             color: Theme.of(context).accentColor,
           ),
@@ -42,19 +35,6 @@ class ClientsScreen extends StatelessWidget {
         elevation: 0,
       ),
       drawer: AppDrawer(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text('${clients[index].name}'),
-              onTap: () {},
-            );
-          },
-          separatorBuilder: (context, index) => Divider(),
-          itemCount: clients.length,
-        ),
-      ),
     );
   }
 }

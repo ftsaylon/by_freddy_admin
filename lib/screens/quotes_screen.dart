@@ -1,9 +1,15 @@
 /* -------------------------------- Packages -------------------------------- */
+import '../providers/quotes.dart';
 import 'package:flutter/material.dart';
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------- Providers ------------------------------- */
+import '../providers/clients.dart';
+/* -------------------------------------------------------------------------- */
+
 /* --------------------------------- Screens -------------------------------- */
-import 'package:by_freddy_admin/screens/edit_quote_screen.dart';
+import '../screens/edit_quote_screen.dart';
+import 'package:provider/provider.dart';
 /* -------------------------------------------------------------------------- */
 
 enum ActionOptions {
@@ -14,20 +20,6 @@ enum ActionOptions {
   Accept,
 }
 
-class Quote {
-  final String id;
-  final int freddyNumber;
-  final String quoteNumber;
-  final String customer;
-
-  Quote(
-    this.id,
-    this.freddyNumber,
-    this.quoteNumber,
-    this.customer,
-  );
-}
-
 class QuotesScreen extends StatelessWidget {
   const QuotesScreen({Key key}) : super(key: key);
 
@@ -36,39 +28,8 @@ class QuotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-
-    final quotes = [
-      Quote(
-        '1',
-        1298,
-        'INV-2367',
-        'Pauline Thom',
-      ),
-      Quote(
-        '2',
-        1297,
-        'INV-2349',
-        'Stephen Liddlard',
-      ),
-      Quote(
-        '3',
-        1296,
-        'INV-2348',
-        'Carina Maylam',
-      ),
-      Quote(
-        '4',
-        1294,
-        'INV-2321',
-        'Stuart Morley',
-      ),
-      Quote(
-        '5',
-        1293,
-        'INV-2319',
-        'Stuart Morley',
-      ),
-    ];
+    final country = ModalRoute.of(context).settings.arguments;
+    final quotes = Provider.of<Quotes>(context).getByCountry(country);
 
     return Scaffold(
       appBar: AppBar(
@@ -95,51 +56,57 @@ class QuotesScreen extends StatelessWidget {
         ],
         elevation: 0,
       ),
-      body: Container(
-        width: double.infinity,
-        child: DataTable(
-          columnSpacing: deviceSize.width * 0.05,
-          columns: <DataColumn>[
-            DataColumn(
-              label: Expanded(
-                child: Text('Freddy #'),
+      body: (quotes.isNotEmpty)
+          ? Container(
+              width: double.infinity,
+              child: DataTable(
+                columnSpacing: deviceSize.width * 0.05,
+                columns: <DataColumn>[
+                  DataColumn(
+                    label: Expanded(
+                      child: Text('Freddy #'),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text('Quote #'),
+                  ),
+                  DataColumn(
+                    label: Text('Customer'),
+                  ),
+                  DataColumn(
+                    label: Text('Actions'),
+                  ),
+                ],
+                rows: quotes.map((quote) {
+                  final client =
+                      Provider.of<Clients>(context).findById(quote.clientId);
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        Text('${quote.freddyNumber}'),
+                      ),
+                      DataCell(
+                        Text('${quote.quoteNumber}'),
+                      ),
+                      DataCell(
+                        Text('${client.name}'),
+                      ),
+                      DataCell(
+                        Center(child: Icon(Icons.more_horiz)),
+                        onTap: () {
+                          _showItemActions(context);
+                        },
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            )
+          : Center(
+              child: Text(
+                'No quotes yet, please select another country.',
               ),
             ),
-            DataColumn(
-              label: Text('Quote #'),
-            ),
-            DataColumn(
-              label: Text('Customer'),
-            ),
-            DataColumn(
-              label: Text('Actions'),
-            ),
-          ],
-          rows: quotes
-              .map(
-                (quote) => DataRow(
-                  cells: [
-                    DataCell(
-                      Text('${quote.freddyNumber}'),
-                    ),
-                    DataCell(
-                      Text('${quote.quoteNumber}'),
-                    ),
-                    DataCell(
-                      Text('${quote.customer}'),
-                    ),
-                    DataCell(
-                      Center(child: Icon(Icons.more_horiz)),
-                      onTap: () {
-                        _showItemActions(context);
-                      },
-                    ),
-                  ],
-                ),
-              )
-              .toList(),
-        ),
-      ),
     );
   }
 

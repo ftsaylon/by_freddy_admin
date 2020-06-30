@@ -113,12 +113,16 @@ class InvoicesMenuScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                       switch (choice) {
                         case Choice.invoices:
-                          Navigator.of(context)
-                              .pushNamed(InvoicesScreen.routeName);
+                          Navigator.of(context).pushNamed(
+                            InvoicesScreen.routeName,
+                            arguments: country,
+                          );
                           break;
                         case Choice.quotes:
-                          Navigator.of(context)
-                              .pushNamed(QuotesScreen.routeName);
+                          Navigator.of(context).pushNamed(
+                            QuotesScreen.routeName,
+                            arguments: country,
+                          );
                           break;
                         default:
                       }

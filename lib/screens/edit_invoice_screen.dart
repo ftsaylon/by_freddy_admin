@@ -25,14 +25,14 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
   final _form = GlobalKey<FormState>();
   final _countryFocusNode = FocusNode();
   final _companyFocusNode = FocusNode();
-  final _clientFocusNode = FocusNode();
+  final _clientIdFocusNode = FocusNode();
   final _notesFocusNode = FocusNode();
 
   var _editedInvoice = Invoice(
     id: null,
     country: '',
     company: '',
-    client: '',
+    clientId: '',
     dateOfIssue: null,
     dueDate: null,
     budget: '',
@@ -49,7 +49,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
     'id': '',
     'country': '',
     'company': '',
-    'client': '',
+    'clientId': '',
     'dateOfIssue': null,
     'dueDate': null,
     'budget': '',
@@ -66,7 +66,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
   void dispose() {
     _countryFocusNode.dispose();
     _companyFocusNode.dispose();
-    _clientFocusNode.dispose();
+    _clientIdFocusNode.dispose();
     _notesFocusNode.dispose();
     super.dispose();
   }
@@ -171,7 +171,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                         id: _editedInvoice.id,
                         country: value,
                         company: _editedInvoice.company,
-                        client: _editedInvoice.client,
+                        clientId: _editedInvoice.clientId,
                         dateOfIssue: _editedInvoice.dateOfIssue,
                         dueDate: _editedInvoice.dueDate,
                         budget: _editedInvoice.budget,
@@ -203,7 +203,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                     focusNode: _companyFocusNode,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(
-                        _clientFocusNode,
+                        _clientIdFocusNode,
                       );
                     },
                     validator: (value) {
@@ -217,7 +217,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                         id: _editedInvoice.id,
                         country: _editedInvoice.country,
                         company: value,
-                        client: _editedInvoice.client,
+                        clientId: _editedInvoice.clientId,
                         dateOfIssue: _editedInvoice.dateOfIssue,
                         dueDate: _editedInvoice.dueDate,
                         budget: _editedInvoice.budget,
@@ -240,13 +240,13 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
-                    initialValue: _initValues['client'],
+                    initialValue: _initValues['clientId'],
                     decoration: InputDecoration(
                       labelText: 'Client Name',
                       border: OutlineInputBorder(),
                     ),
                     textInputAction: TextInputAction.next,
-                    focusNode: _clientFocusNode,
+                    focusNode: _clientIdFocusNode,
                     onFieldSubmitted: (_) {
                       FocusScope.of(context).requestFocus(
                         _notesFocusNode,
@@ -263,7 +263,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                         id: _editedInvoice.id,
                         country: _editedInvoice.country,
                         company: _editedInvoice.company,
-                        client: value,
+                        clientId: value,
                         dateOfIssue: _editedInvoice.dateOfIssue,
                         dueDate: _editedInvoice.dueDate,
                         budget: _editedInvoice.budget,
@@ -295,7 +295,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                           id: _editedInvoice.id,
                           country: _editedInvoice.country,
                           company: _editedInvoice.company,
-                          client: _editedInvoice.client,
+                          clientId: _editedInvoice.clientId,
                           dateOfIssue: date,
                           dueDate: _editedInvoice.dueDate,
                           budget: _editedInvoice.budget,
@@ -321,7 +321,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                           id: _editedInvoice.id,
                           country: _editedInvoice.country,
                           company: _editedInvoice.company,
-                          client: _editedInvoice.client,
+                          clientId: _editedInvoice.clientId,
                           dateOfIssue: _editedInvoice.dateOfIssue,
                           dueDate: date,
                           budget: _editedInvoice.budget,
@@ -361,7 +361,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                                         id: _editedInvoice.id,
                                         country: _editedInvoice.country,
                                         company: _editedInvoice.company,
-                                        client: _editedInvoice.client,
+                                        clientId: _editedInvoice.clientId,
                                         dateOfIssue: _editedInvoice.dateOfIssue,
                                         dueDate: _editedInvoice.dueDate,
                                         budget: 'A',
@@ -390,7 +390,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                                         id: _editedInvoice.id,
                                         country: _editedInvoice.country,
                                         company: _editedInvoice.company,
-                                        client: _editedInvoice.client,
+                                        clientId: _editedInvoice.clientId,
                                         dateOfIssue: _editedInvoice.dateOfIssue,
                                         dueDate: _editedInvoice.dueDate,
                                         budget: 'B',
@@ -419,7 +419,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                                         id: _editedInvoice.id,
                                         country: _editedInvoice.country,
                                         company: _editedInvoice.company,
-                                        client: _editedInvoice.client,
+                                        clientId: _editedInvoice.clientId,
                                         dateOfIssue: _editedInvoice.dateOfIssue,
                                         dueDate: _editedInvoice.dueDate,
                                         budget: 'C',
@@ -480,7 +480,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
                               id: _editedInvoice.id,
                               country: _editedInvoice.country,
                               company: _editedInvoice.company,
-                              client: _editedInvoice.client,
+                              clientId: _editedInvoice.clientId,
                               dateOfIssue: _editedInvoice.dateOfIssue,
                               dueDate: _editedInvoice.dueDate,
                               budget: _editedInvoice.budget,

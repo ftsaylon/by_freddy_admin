@@ -5,7 +5,7 @@ import 'package:flutter_signin_button/button_view.dart';
 /* -------------------------------------------------------------------------- */
 
 /* --------------------------------- Screens -------------------------------- */
-import 'package:by_freddy_admin/screens/home_screen.dart';
+import '../screens/home_screen.dart';
 /* -------------------------------------------------------------------------- */
 
 class AuthForm extends StatefulWidget {

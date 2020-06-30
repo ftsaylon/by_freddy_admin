@@ -1,9 +1,16 @@
 /* -------------------------------- Packages -------------------------------- */
+import '../screens/invoice_details_screen.dart';
 import 'package:flutter/material.dart';
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------- Providers ------------------------------- */
+import '../providers/clients.dart';
+import '../providers/invoices.dart';
+/* -------------------------------------------------------------------------- */
+
 /* --------------------------------- Screens -------------------------------- */
-import 'package:by_freddy_admin/screens/edit_invoice_screen.dart';
+import '../screens/edit_invoice_screen.dart';
+import 'package:provider/provider.dart';
 /* -------------------------------------------------------------------------- */
 
 enum ActionOptions {
@@ -12,61 +19,17 @@ enum ActionOptions {
   Lost,
 }
 
-class Invoice {
-  final String id;
-  final int freddyNumber;
-  final String invoiceNumber;
-  final String customer;
-
-  Invoice(
-    this.id,
-    this.freddyNumber,
-    this.invoiceNumber,
-    this.customer,
-  );
-}
-
 class InvoicesScreen extends StatelessWidget {
-  const InvoicesScreen({Key key}) : super(key: key);
+  InvoicesScreen({Key key}) : super(key: key);
 
   static const routeName = '/invoices';
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    final country = ModalRoute.of(context).settings.arguments;
 
-    final invoices = [
-      Invoice(
-        '1',
-        1298,
-        'INV-2367',
-        'Pauline Thom',
-      ),
-      Invoice(
-        '2',
-        1297,
-        'INV-2349',
-        'Stephen Liddlard',
-      ),
-      Invoice(
-        '3',
-        1296,
-        'INV-2348',
-        'Carina Maylam',
-      ),
-      Invoice(
-        '4',
-        1294,
-        'INV-2321',
-        'Stuart Morley',
-      ),
-      Invoice(
-        '5',
-        1293,
-        'INV-2319',
-        'Stuart Morley',
-      ),
-    ];
+    final invoices = Provider.of<Invoices>(context).getByCountry(country);
 
     return Scaffold(
       appBar: AppBar(
@@ -93,56 +56,64 @@ class InvoicesScreen extends StatelessWidget {
         ],
         elevation: 0,
       ),
-      body: Container(
-        width: double.infinity,
-        child: DataTable(
-          columnSpacing: deviceSize.width * 0.05,
-          columns: <DataColumn>[
-            DataColumn(
-              label: Expanded(
-                child: Text('Freddy #'),
+      body: (invoices.isNotEmpty)
+          ? Container(
+              width: double.infinity,
+              child: DataTable(
+                columnSpacing: deviceSize.width * 0.05,
+                columns: <DataColumn>[
+                  DataColumn(
+                    label: Expanded(
+                      child: Text('Freddy #'),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text('Invoice #'),
+                  ),
+                  DataColumn(
+                    label: Text('Customer'),
+                  ),
+                  DataColumn(
+                    label: Text('Actions'),
+                  ),
+                ],
+                rows: invoices.map(
+                  (invoice) {
+                    final client = Provider.of<Clients>(context)
+                        .findById(invoice.clientId);
+                    return DataRow(
+                      cells: [
+                        DataCell(
+                          Text('${invoice.freddyNumber}'),
+                        ),
+                        DataCell(
+                          Text('${invoice.invoiceNumber}'),
+                        ),
+                        DataCell(
+                          Text('${client.name}'),
+                        ),
+                        DataCell(
+                          Center(child: Icon(Icons.more_horiz)),
+                          onTap: () {
+                            _showActions(context, invoice.id);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ).toList(),
+              ),
+            )
+          : Center(
+              child: Text(
+                'No invoices yet, please select another country.',
               ),
             ),
-            DataColumn(
-              label: Text('Invoice #'),
-            ),
-            DataColumn(
-              label: Text('Customer'),
-            ),
-            DataColumn(
-              label: Text('Actions'),
-            ),
-          ],
-          rows: invoices
-              .map(
-                (invoice) => DataRow(
-                  cells: [
-                    DataCell(
-                      Text('${invoice.freddyNumber}'),
-                    ),
-                    DataCell(
-                      Text('${invoice.invoiceNumber}'),
-                    ),
-                    DataCell(
-                      Text('${invoice.customer}'),
-                    ),
-                    DataCell(
-                      Center(child: Icon(Icons.more_horiz)),
-                      onTap: () {
-                        _showActions(context);
-                      },
-                    ),
-                  ],
-                ),
-              )
-              .toList(),
-        ),
-      ),
     );
   }
 /* -------------------------------------------------------------------------- */
 
-  void _showActions(BuildContext context) {
+  void _showActions(BuildContext context, String invoiceId) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -152,7 +123,13 @@ class InvoicesScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.view_module),
               title: Text('View'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(
+                  InvoiceDetailScreen.routeName,
+                  arguments: invoiceId,
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.edit),
